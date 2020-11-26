@@ -1,0 +1,43 @@
+Exercises:
+
+Q1: Create a void function cubeByPointer() that will find the cube of
+a number using pointer as an argument of a function.
+Add a test to main to show it works correctly.
+
+Q2: Create a void function sumTwoInt() that will have 2 pointers as
+arguments and will calculate the sum of two integers.
+Add a test to main to show it works correctly.
+
+Q3: Create a void function circle() that will have 3 pointers as
+arguments, and will calculate the area and circumference of a circle.
+Add a test to main to show it works correctly.
+
+Q4: Create a boolean function quadEquation() that calculates the solutions
+to quadratic equations. Arguments: The coefficients a, b, c and two
+pointers for the solutions. Returns: false if no real solutions are
+available, true otherwise.
+
+Q5: The version of swap() listed below can be compiled without producing
+any error messages. However, the function will not swap the values x and
+y when swap(&x, &y) is called. What is wrong? Create a function that will
+correctly swap the values.
+
+void swap(float *p1, float *p2){
+    float *temp;
+    temp = p1;
+    p1 = p2;
+    p2 = temp;
+}
+
+Q6: Recall that if a and b are the real and imaginary parts of a complex
+number (a + bi), then that number squared has the real and imaginary
+parts a2 -b2 and 2ab, respectively. Find and fix the bug in the following
+code:
+
+void SquareComplex(double &a, double &b){
+    // Squares a complex number a + bi
+    a = a*a - b*b;
+    b = 2*a*b;
+}
+
+HINT:  Try testing to check results first, and see what happens.

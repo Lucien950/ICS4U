@@ -1,0 +1,37 @@
+1D Arrays
+Example 1
+b) Write a program that dynamically allocates an array, enters its
+content from the keyboard and print its content in reverse order.
+Make sure to use delete[] when finished.
+c) Write a program that dynamically allocates an array, initializes
+all the locations with random number s from 1 - 50 and finds the sum
+of all the elements of the array.  Make sure to use delete[] when
+finished.
+Example 2
+Write a program that declares two dynamically allocated arrays of
+integers and appends the second array at the end of the first one
+to form the third one.  Make sure to use delete[] when finished.
+
+2D Arrays
+Example 1
+b) Write a program that initializes a 2-dim array using random
+numbers from 1 – 1000 and finds the average of all the values.
+Make sure to properly deallocate memory afterwards.
+
+c) Write a program that initializes an n by n (square) 2-dim array
+and prints the elements on its main diagonal. Make sure to properly
+deallocate memory afterwards.
+Example 2
+Write a program that declares two dynamically allocated 2-dim arrays
+of integers and appends the second array at the end of the first one
+to form the third 2-dim array. Make sure to properly deallocate
+memory afterwards.
+
+Passing Arrays to Functions
+Example 1
+Declare and initialize an array of length 5. Send the array to the
+function modifyArray that doubles each of the original values of
+elements of the array. Now, print the new values of the array. Also,
+send a single element of the array to the function modifyElement
+that doubles the element received and prints it out. Now, print the
+value of the element one more time after returning to the main function.
