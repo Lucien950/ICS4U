@@ -78,6 +78,7 @@ int main(){
     cout << "Height of the first array" << endl;
     cin >> h1;
 	arr21 = new int *[width];
+
     cout  << "Height of the second array" << endl;
     cin >> h2;
 	arr22 = new int *[width];
