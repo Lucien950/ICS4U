@@ -1,0 +1,33 @@
+Example 1. Create a C++ function called power that returns a power given a base and an exponent using recursion.
+
+Example 2. The Fibonacci sequence 0, 1, 1, 2, 3, 5, 8, 13, 21, … begins with 0 and 1 and has the property that each subsequent Fibonacci number is the sum of the previous two Fibonacci numbers. Create a C++ function called fib that returns nth element of Fibonacci sequence using recursion.
+
+Example 3. Write a function printArrayRecursive to print an array recursively.
+
+void print_array_rec(int a[], int length)
+{
+   if (length == 0)
+      cout << "\t";
+   else
+      print_array_rec( a, length-1);
+      cout << a[length ] << "\t";
+}
+
+Example 4.
+a) Write a function init_array that initializes an array of length 10 to random numbers between 1 and 50
+b) Write a recursive function that initializes elements of the array called twopower to 1, 2, 4, 8, and so on.
+c) Write a function sum that finds the sum of the elements of the array.
+d) Write a function recursive_sum that finds the sum of the elements of the array.
+e) Write a function largest that finds the largest element in the array.
+f) Write a function recursive_largest that finds the largest element in the array recursively.
+
+Example 5. Write a program that solves the problem known as The Birthday Paradox. The problem goes like this: Find the probability that at least 2 people in the class are born on the same day if the class has
+a) 1 student b) 2 students ... z) 26 students
+
+General concept to find the probability of an event:
+1) find the total number of samples that include all possibility. (sample space)
+2) find the total number of samples that match the event. (event space)
+3) (event space)/(sample space) is the answer.
+
+a) Write an iterative function that solves the problem
+b) Write a recursive function that solves the problem

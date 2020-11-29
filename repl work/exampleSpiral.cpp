@@ -4,43 +4,41 @@ using namespace std;
 #define R 3
 #define C 6
 void spiralPrint(int m, int n, int a[R][C]){
-	int i, k = 0, l = 0;
+	int k = 0, l = 0;
 
 	/* k - starting row index
 		m - ending row index
 		l - starting column index
 		n - ending column index
-		i - iterator
 	*/
 
 	while (k < m && l < n) {
-		/* Print the first row from
-			   the remaining rows */
-		for (i = l; i < n; ++i) {
+		//=============Up mode=============
+		/* Print the first row from the remaining rows */
+		for (int i = l; i < n; ++i) { // i from l to n
 			cout << a[k][i] << " ";
 		}
 		k++;
 
-		/* Print the last column
-		 from the remaining columns */
-		for (i = k; i < m; ++i) {
+		/* Print the last column from the remaining columns */
+		for (int i = k; i < m; ++i){ // i from k to m
 			cout << a[i][n - 1] << " ";
 		}
 		n--;
 
-		/* Print the last row from
-				the remaining rows */
+
+		//=============Down mode=============
+		/* Print the last row from the remaining rows */
 		if (k < m) {
-			for (i = n - 1; i >= l; --i) {
+			for (int i = n - 1; i >= l; --i) {// n-1 down to l
 				cout << a[m - 1][i] << " ";
 			}
 			m--;
 		}
 
-		/* Print the first column from
-				   the remaining columns */
+		/* Print the first column from the remaining columns */
 		if (l < n) {
-			for (i = m - 1; i >= k; --i) {
+			for (int i = m - 1; i >= k; --i) {//m-1 down to k
 				cout << a[i][l] << " ";
 			}
 			l++;
