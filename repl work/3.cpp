@@ -1,4 +1,5 @@
 #include <iostream>
+#include <bits/stdc++.h>
 #include <random>
 
 using namespace std;
@@ -16,15 +17,16 @@ void modifyElement(int *i){
 int main(){
 
     //1D b)
-    cout << "Enter array to be printed backwards" << endl;
+    cout << "Enter array to be printed backwards (6 elements)" << endl;
     int *arr;
     arr = new int[6];
     for(int i = 0; i < 6; i++) {
         cin >> arr[i];
     }
     for(int i = 5; i >= 0; i--){
-    	cout << arr[i] << endl;
+    	cout << arr[i] << " ";
     }
+    cout << endl << endl;
     delete[] arr;
 
     //Q1 c)
@@ -35,7 +37,10 @@ int main(){
         sum += toAdd;
         arr[i] = toAdd;
     }
-    cout << endl << "Sum of random array is " << sum << endl;
+    for(int i = 0; i < 50; i++){
+    	cout << arr[i] << " ";
+    }
+    cout <<  endl << "Sum of random array is " << sum << endl;
     delete[] arr;
 
     //2D b)
@@ -50,7 +55,13 @@ int main(){
             sum += toAdd;
         }
     }
-    cout << "Average of random array is " << (sum/100.0) << endl;
+    for(int i = 0; i < 10; i++){
+    	for(int j = 0; j < 10; j++){
+    		cout << setw(4) << arr2[i][j] << " ";
+    	}
+    	cout << endl;
+    }
+    cout << endl<< "Average of random array is " << (sum/100.0) << endl << endl;
 
     delete[] arr2;
 
@@ -63,6 +74,9 @@ int main(){
     }
     delete[] arr2;
 
+
+
+
     //Example 2
     int **arr21, **arr22, **arr23;
 
@@ -70,57 +84,84 @@ int main(){
     int width;
     cin >> width;
 
-
-    arr23 = new int *[width];
 	int h1;
 	int h2;
 
     cout << "Height of the first array" << endl;
     cin >> h1;
-	arr21 = new int *[width];
+	arr21 = new int *[h1];
+	for(int i = 0; i < h1; i++){
+		arr21[i] = new int[width];
+	}
 
     cout  << "Height of the second array" << endl;
     cin >> h2;
-	arr22 = new int *[width];
+	arr22 = new int *[h2];
+	for(int i = 0; i < h2; i++){
+		arr22[i] = new int[width];
+	}
 
-	for(int j = 0; j < width; j++){
-		cout << "Value of column " << (j + 1)  << " in the first subarray"<< endl;
-		int *toAdd = new int[h1 + h2];
-		for(int i = 0; i < h1; i++){
-			cin >> toAdd[i];
+	arr23 = new int *[h1 + h2];
+	for(int i = 0; i < h1 + h2; i++){
+		arr23[i] = new int[width];
+	}
+
+	mt19937 mt (random_device{}());
+	uniform_int_distribution<int> dist(1, 100);
+
+	for(int j = 0; j < h1; j++){
+		cout << "Value of horizontal row " << (j + 1)  << " in the first subarray"<< endl;
+		for(int i = 0; i < width; i++){
+			arr21[j][i] = dist(mt);
 		}
-		cout << "Value of column " << (j + 1)  << " in the second subarray"<< endl;
-		for(int i = 0; i < h2; i++){
-			cin >> toAdd[i + h1];
+	}
+	for(int j = 0; j < h2; j++){
+		cout << "Value of horizontal row " << (j + 1)  << " in the second subarray"<< endl;
+		for(int i = 0; i < width; i++){
+			arr22[j][i] = dist(mt);
 		}
-		arr23[j];
 	}
 
 	//Allocate values to the array
-    for(int i = 0; i < (sizeof(arr21)/sizeof(*arr21)); i++){
+    for(int i = 0; i < h1; i++){
         arr23[i] = arr21[i];
     }
-    for(int i = 0; i < (sizeof(arr22)/sizeof(*arr22)); i++){
-        arr23[i+(sizeof(arr21)/sizeof(*arr21))] = arr22[i];
+    for(int i = 0; i < h2; i++){
+        arr23[i+h1] = arr22[i];
     }
+
+    //PRINT THE ARRAY!!!
+	for(int i = 0; i < h1 + h2; i++){
+		for(int j = 0; j < width; j++) {
+			cout << setw(2) << arr23[i][j] << " ";
+		}
+		cout << endl;
+    }
+	cout << endl;
+
     delete[] arr21;
     delete[] arr22;
     delete[] arr23;
+
+
+
 
     //Passing Arrays to Functions Example 1
     int array[5] = {1, 2, 3, 4, 5};
     modifyArray(array);
     for(int i : array){
-    	cout << i << endl;
+    	cout << i << " ";
     }
+    cout << endl;
 
 	cout << endl << array[0] << endl;
 	modifyElement(&array[0]);
-    cout << array[0] << endl << endl;
+	cout << endl;
 
     for(int i : array) {
-		cout << i << endl;
+		cout << i << " ";
 	}
+	cout << endl;
 
     return 0;
 }

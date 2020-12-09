@@ -9,14 +9,12 @@ int power(int base, int exponent){
 	}
 	return base * power(base, exponent - 1);
 }
-
 int fib(int n){
 	if(n == 1 || n == 2){
 		return 1;
 	}
 	return fib(n-1) + fib(n-2);
 }
-
 void printArrayRecursive(int a[], int max, int n = 0){
 	if(n == max){
 		return;
@@ -24,27 +22,23 @@ void printArrayRecursive(int a[], int max, int n = 0){
 	cout << a[n] << " ";
 	printArrayRecursive(a, max, n+1);
 }
-
-int* init_array(){
-	int* out = new int[10];
-	random_device rd;
-	mt19937 mt(rd());
-	uniform_int_distribution<> dist(1,10);
-	for(int i = 0; i < 10; i++){
-		out[i] = dist(mt);
+random_device rd;
+mt19937 mt(rd());
+uniform_int_distribution<> dist(1,10);
+void init_array(int * arr, int size){
+	if(size == 0){
+		return;
 	}
-	return out;
+	arr[size-1] = dist(mt);
+	return init_array(arr, size - 1);
 }
 
-int* twoPower(int n, int runningVal = 1, int runningIter = 1, int* returner = nullptr){
-	if(runningIter == 1){
-		returner = new int[n];
+void twoPower(int* arr, int size){
+	if(size == -1){
+		return;
 	}
-	returner[runningIter - 1] = runningVal;
-	if(runningIter == n){
-		return returner;
-	}
-	return twoPower(n, runningVal * 2, runningIter + 1, returner);
+	arr[size-1] = pow(2, size-1);
+	return twoPower(arr, size - 1);
 }
 
 int sumArray(const int arr[], int arrSize){
@@ -54,14 +48,12 @@ int sumArray(const int arr[], int arrSize){
 	}
 	return sum;
 }
-
 int recursive_sum(const int arr[], int arrSize, int i = 0){
 	if(i == arrSize){
 		return 0;
 	}
 	return arr[i] + recursive_sum(arr, arrSize, i+1);
 }
-
 int maxVal(const int arr[], int arrSize){
 	int out = arr[0];
 	for(int i = 0; i < arrSize; i++){
@@ -72,18 +64,12 @@ int maxVal(const int arr[], int arrSize){
 	return out;
 }
 
-int recursive_largest(const int arr[], int arrSize, int i = 0){
-	if(i == arrSize-1){
-		return arr[i];
+int recursive_largest(const int arr[], int size){
+	if(size == 0){
+		return arr[size];
 	}
-
-	int next = recursive_largest(arr, arrSize, i+1);
-	if(arr[i] > next){
-		return arr[i];
-	}else{
-		return next;
-	}
-};
+	return max(arr[size-1], recursive_largest(arr, size - 1));
+}
 
 double birthdayMatch(int people){
 	double top = 1;
@@ -92,7 +78,6 @@ double birthdayMatch(int people){
 	}
 	return 100.0*(1.0 - (top/pow(365, people)));
 };
-
 double birthdayMatch_rec(int people, int i = 1){
 	if(i == people && i == 1){
 		return 0;
@@ -108,35 +93,53 @@ double birthdayMatch_rec(int people, int i = 1){
 	}
 }
 
+
 int main(){
 	//EXAMPLE 1
-	cout << power(2, 3) << endl;
+	cout << "Power" << endl;
+	cout << power(2, 3) << endl << endl;
 
 	//EXAMPLE 2
-	cout << fib(10) << endl;
+	cout << "Fibinocci" << endl;
+	cout << fib(10) << endl << endl;
 
 	//EXAMPLE 3
+	cout<<"Print Recursively" << endl;
 	int a[4] = {1, 2, 3, 4};
 	printArrayRecursive(a, 4);
-	cout << endl;
+	cout << endl << endl;
 
 	//EXAMPLE 4
 	//a)
-	int* randArray = init_array();
+	cout << "Random Array" << endl;
+	int* randArray = new int[10];
+	init_array(randArray, 10);
+	printArrayRecursive(randArray, 10);
+	cout << endl << endl;
 	//b)
-	int* twoPowers = twoPower(5);
+	int * arr = new int[5];
+	twoPower(arr, 5);
+	cout << "TWO POWERS" << endl;
+	for(int i = 0; i < 5; i++){
+		cout << arr[i] << " ";
+	}
+	cout << endl << endl;
 	//c)
+	cout << "Sum" << endl;
 	int sum = sumArray(a, 4);
 	cout << sum << endl;
 	//d)
+	cout << "Recursive Sum" << endl;
 	int recurSum = recursive_sum(a,4 );
-	cout << recurSum << endl;
+	cout << recurSum << endl << endl;
 	//e)
+	cout << "Max Value" << endl;
 	int max = maxVal(a, 4);
 	cout << max << endl;
 	//f)
+	cout << "Recursive Largest" << endl;
 	int maxRecur = recursive_largest(a, 4);
-	cout << maxRecur << endl;
+	cout << maxRecur << endl << endl;
 
 	//EXAMPLE 5
 	cout << birthdayMatch(1) << "%" << endl;

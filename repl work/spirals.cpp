@@ -1,5 +1,6 @@
 #include <iostream>
 #include <math.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 int* spiraler(int m, int n, int ** a){
@@ -47,10 +48,9 @@ int* spiraler(int m, int n, int ** a){
 	return out;
 }
 
-void reverseArray(int arr[])
+void reverseArray(int arr[], int end)
 {
 	int start = 0;
-	int end = sizeof(arr)/sizeof(arr[0]);
 
 	while (start < end)
 	{
@@ -62,18 +62,31 @@ void reverseArray(int arr[])
 	}
 }
 
+void printIT(int ** arr, int height, int width){
+	for(int i = 0; i < height; i++){
+		for(int j = 0; j < width; j++){
+			if(arr[i][j] == -1){
+				cout << setw(2) << "__ ";
+			}else{
+				cout << setw(2) << arr[i][j] << " ";
+			}
+		}
+		cout << endl;
+	}
+}
+
 int main(){
-	int x = 0;
-	int y = 0;
+	int start = 0;
+	int end = 0;
 
 	bool badInput = true;
 	while(badInput) {
 		cout << "Start Value:" << endl;
-		cin >> x;
+		cin >> start;
 		cout << "End Value:" << endl;
-		cin >> y;
+		cin >> end;
 
-		if(y <= x){
+		if(end <= start){
 			cout << "Bad Input, try again" << endl;
 			continue;
 		}
@@ -82,16 +95,23 @@ int main(){
 
 	//CREATE AN ARRAY FOR THE RANGE
 	int *arr;
-	arr = new int[y-x];
-	for(int i = 0; i <= y-x; i++){
-		arr[i] = x+i;
+	arr = new int[end - start];
+	for(int i = 0; i <= end - start; i++){
+		arr[i] = start + i;
 	}
 
 
 	//Print the thing
 	//GET THE SPIRALS WIDTH AND HEIGHT
-	int height = ceil(sqrt(y-x));
-	int width = round(sqrt(y-x));
+	int height = 1, width = 1;
+	while(width * height <= end-start){
+		if(height < width){
+			height++;
+		}else{
+			width++;
+		}
+	}
+	cout << "Height " << height << ", Width" << width << endl;
 
 	//CREATE THE SCAFFOLD FOR THE FINAL ARRAY
 	int **templateArr;
@@ -104,22 +124,30 @@ int main(){
 	}
 
 
-
 	int *orderArr = spiraler(height, width, templateArr);
-	cout << "orderArr activities" << endl;
-	for(int i = 0; i < height * width; i++){
-		cout << orderArr[i] << endl;
+	for(int i = 0; i < width * height; i++){
+		cout << orderArr[i] << " ";
+	}
+	cout << endl;
+
+	int ** finalArr = new int*[height];
+	for(int i = 0; i < height; i++){
+		finalArr[i] = new int[width];
+		for(int j = 0; j < width; j++){
+			finalArr[i][j] = -1;
+		}
 	}
 
+	for(int i = start; i <= end; i++){
+		int position = orderArr[(width*height)-(i-start)-1];
+		int xPos = (position - 1) % width;
+		int yPos = floor((position-1)/width);
 
-	int ** finalArr = new int*[width];
+		finalArr[yPos][xPos] = i;
+	}
 
-	cout << "Final Output" << endl;
-//	for(int i = 0; i < height; i++){
-//		for(int j = 0; j < width; j++){
-//			cout << finalArr[i][j] << " ";
-//		}
-//		cout << endl;
-//	}
+	//PRINT OUT
+	cout << endl << "Final Output" << endl;
+	printIT(finalArr, height, width);
 	return 0;
 }
