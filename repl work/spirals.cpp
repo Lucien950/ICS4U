@@ -111,7 +111,7 @@ int main(){
 			width++;
 		}
 	}
-	cout << "Height " << height << ", Width" << width << endl;
+	cout << "Height " << height << ", Width " << width << endl;
 
 	//CREATE THE SCAFFOLD FOR THE FINAL ARRAY
 	int **templateArr;
@@ -124,11 +124,15 @@ int main(){
 	}
 
 
-	int *orderArr = spiraler(height, width, templateArr);
+	int * orderArr;
+	orderArr = spiraler(height, width, templateArr);
+	cout << endl;
 	for(int i = 0; i < width * height; i++){
 		cout << orderArr[i] << " ";
 	}
 	cout << endl;
+	cout << endl;
+
 
 	int ** finalArr = new int*[height];
 	for(int i = 0; i < height; i++){

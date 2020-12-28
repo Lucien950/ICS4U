@@ -1,0 +1,33 @@
+1. Create function CreateRndArray to generate an array with size elements that contains random values between the provided range low to high.
+
+2. Create a linear search function to find a value in an array. Return -1 if not found.
+
+3. Create a binary search function to find a value in an array. Return -1 if not found.
+
+4. Create a function to output certain elements of the array (i.e. top half of array).
+
+5. Use your functions to create a program that will output something similar to the following:
+
+Enter number of elements: 15
+Enter lower limit: 10
+Enter upper limit: 100
+
+Your values are:
+12 17 22 25 30 39 40 52 56 72 76 82 84 91 93
+
+Please enter an integer value (-1 to quit): 72
+
+12 17 22 25 30 39 40 52 56 72 76 82 84 91 93
+56 72 76 82 84 91 93
+56 72 76
+72
+The integer 72 was found in position 9.
+
+Please enter an integer value (-1 to quit): 13
+12 17 22 25 30 39 40 52 56 72 76 82 84 91 93
+12 17 22 25 30 39 40
+12 17 22
+12
+The integer 13 was not found.
+
+Please enter an integer value (-1 to quit): -1

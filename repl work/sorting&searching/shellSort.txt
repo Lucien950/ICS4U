@@ -1,0 +1,45 @@
+Exercises (Submit any written/graphical answers to benjamin.hudson@ocdsb.ca.  Make sure subject matches lesson title: Unit2Lesson2.4 - Shell Sort).
+
+1. Given the following data, show how they would appear after they have been 5-sorted.
+
+26 37 21 41 63 19 61 72 55 29 47 18 26 22
+
+2. Starting with the same set of data from question 1, show how they would appear 4-sorted.
+
+3. How would you answer the following argument against using Shell Sort? "The last step of Shell Sort, using k = 1, is simply a normal insertion sort. Since Shell Sort performs many preliminary steps before this final one, it must be slower than a single insertion sort."
+
+4. Suppose you were going to write a version of Shell Sort using the sequence of k-sorts suggested previously. For a list containing n elements,
+the first value of k that should be used is the largest value in the sequence that is less than n. For example, in a list of 50 elements, the largest k value would be 40,
+so the first pass should be 40-sorted.
+
+(a) Write a sequence of statements that will initialize k correctly for a given value of n.
+(b) Write a statement that will, for any value of k in the sequence, produce the next smaller value of k.
+
+5.
+(a) Write a method shellSort to sort an array of int values in ascending order. In performing the k-sorts,
+use the sequence of values of k suggested in the text. Be sure to use insertion sort at each stage of the sort.
+(b) Test your method by writing a complete program that first generates an array of 500 random int values in the range [0, 999], prints this array (ten values per line), sorts the array using your shellSort method, and then prints the resulting array (ten values per line).
+
+6. Experiment with using Shell Sort with sequences where k is other than the suggested values, testing your sequences on large arrays of integers and noting the time required by the sort in each case. To measure the time taken by a sort, implement the functions listed below:
+
+#include <sys/timeb.h>
+
+int getMilliCount(){
+  timeb tb;
+  ftime(&tb);
+ int nCount = tb.millitm + (tb.time & 0xfffff) * 1000;
+ return nCount;
+}
+
+int getMilliSpan(int nTimeStart){
+ int nSpan = getMilliCount() - nTimeStart;
+ if(nSpan < 0)
+    nSpan += 0x100000 * 1000;
+ return nSpan;
+}
+
+Then in the main function, use them in the following way:
+
+int start = getMilliCount();
+//call shellSort here!
+int elapsed = getMilliSpan(start);

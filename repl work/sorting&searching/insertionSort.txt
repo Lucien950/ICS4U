@@ -1,0 +1,11 @@
+Exercises (Submit any written/graphical answers to benjamin.hudson@ocdsb.ca.  Make sure subject matches lesson title: Unit2Lesson2.1 - Insertion Sort).
+
+1.  An insertion sort is to b used to put the values 6 2 8 3 1 7 4 in ascending order (lowest to highest). Show the values as they would appear after each pass of the sort.
+
+2. What changes would have to be made to the insertion_sort method in order to sort the values in descending order?
+
+3. Write a program that initializes an array with the names of the planets in their typical order (from closest to furthest from the Sun) and prints them in that order on one line. The program should then use an insertion sort algorithm to arrange the names alphabetically. To trace the progress of the sort, have it print the list after each pass.
+
+4. The median of an ordered list of numerical values is defined in the following way: If the number of values is odd, the median is the middle value. If the number of values is even, the median is the average of the two middle values. Write a program that prompts the user for the number of items to be processed, reads that many real values, and then finds their median.
+
+5. A sort is said to be stable if it always leaves values that are considered to be equal in the same order after the sort. Is the insertion sort stable? Justify your answer.

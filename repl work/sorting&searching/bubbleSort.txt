@@ -1,0 +1,13 @@
+Exercises (Submit any written/graphical answers to benjamin.hudson@ocdsb.ca.  Make sure subject matches lesson title: Unit2Lesson2.3 - Bubble Sort).
+
+1. Show the comparisons and exchanges that would take place in using a bubble sort to put the following data in ascending order.
+
+    3       8       3       2       7       5
+
+2. What changes would have to be made to the bubbleSort method in order to make it sort values in descending order?
+
+3. A variation of the bubble sort is the cocktail shaker sort in which, on odd-numbered passes, large values are carried to the top of the list. On even-numbered passes, small values are carried to the bottom of the list. Show the first two passes on the following data.
+
+     2       9       4       6       1       7       4.
+
+Write a method shakerSort to implement the cocktail shaker sort algorithm to arrange an array of double values in ascending order. Use a boolean flag to stop processing once the items have been completely sorted.

@@ -1,0 +1,22 @@
+1. If a selection sort were to be used to sort the data shown below in alphabetical order, show the data after each pass of the sort.
+
+     Robert       Brian       Victor       David       Scott
+
+2. In the selectSort method, what would happen if the expression arr[j] > arr[max_pos] were to be changed to arr[j] < arr[max_pos]?
+
+3. In our version of selection sort, if the largest item is already at location i in the list, then the method still swaps that value with itself, even though it is not necessary.
+
+(a) How could the method be changed to avoid this unnecessary swapping?
+(b) Why might is be better to leave the method as it is?
+
+4. On each pass of our version of selection sort, the largest value among the remaining unsorted items was placed in its correct position. An alternate form of the algorithm uses each pass to place the smallest value among the remaining unsorted values in its correct position.
+
+(a) Given the set of data
+     8        9       6       1       2       4
+show the data as they would appear after each pass of a selection sort that moves the smallest data.
+
+(b) Write a C++ method that implements this algorithm to sort an array of int values.
+
+5. Sometimes we are only interested in knowing the values that would occupy one end of the list if the list were sorted. For example, we may want to know the scores of only the top ten competitors in a contest. Overload our selection sort method so that it puts the k largest values in order in the last k positions of the array. The value of k should be a parameter of the method.
+
+void selectSort (int[] arr, int n, int k)
