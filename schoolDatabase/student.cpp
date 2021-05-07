@@ -22,3 +22,18 @@ int Student::getNumLates() {return numLates;}
 void Student::setGrade(int n) {grade = n;}
 void Student::setStudentId(string id) {this->studentId = move(id);cout << "hello" << endl;}
 void Student::addLate() {numLates++;}
+
+Student::Student(Student &s): Person(s.getFirstName(), s.getLastName(), s.getAddress()), grade(s.grade), studentId(s.studentId){}
+
+Student &Student::operator=(Student &s) {
+    if(this == &s){
+        return *this;
+    }
+    this->setFirstName(s.getFirstName());
+    this->setLastName(s.getLastName());
+    this->setAddress(s.getAddress());
+
+    return *this;
+}
+
+Student::~Student()= default;

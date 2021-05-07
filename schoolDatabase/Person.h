@@ -20,5 +20,9 @@ public:
     void setAddress(string a);
     friend void getSecrets(Person p);
     virtual string toString();
+
+    Person(const Person& p);
+    Person& operator=(const Person &p);
+    ~Person();
 };
 #endif //CODE_PERSON_H

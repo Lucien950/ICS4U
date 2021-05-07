@@ -20,3 +20,20 @@ bool Teacher::isValidId(string id) {return id.at(0) == 'C' && id.length() == 5;}
 string Teacher::toString() {
     return "Teacher " + getFirstName() + " " + getLastName() + "who lives at " + getAddress() + " with ID " + getEmployeeId() + " and teachables " + getTeachables();
 }
+
+Teacher::Teacher(Teacher &t): Person(t.getFirstName(), t.getLastName(), t.getAddress()), employeeId(t.employeeId), teachables(t.teachables){}
+
+Teacher &Teacher::operator=(Teacher &t) {
+    if(this == &t){
+        return *this;
+    }
+    this->setFirstName(t.getFirstName());
+    this->setLastName(t.getLastName());
+    this->setAddress(t.getAddress());
+    this->teachables = t.teachables;
+    this->employeeId = t.employeeId;
+
+    return *this;
+}
+
+Teacher::~Teacher()= default;

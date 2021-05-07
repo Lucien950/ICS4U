@@ -20,3 +20,17 @@ string Person::toString() {
 void getSecrets(Person p){
     cout << p.firstName << " " << p.lastName << " " << p.address << " " << p.secret;
 }
+
+Person::Person(const Person &p): firstName(p.firstName), lastName(p.lastName), address(p.address){}
+
+Person &Person::operator=(const Person &p) {
+    if(this == &p){
+        return *this;
+    }
+    this->firstName = p.firstName;
+    this->lastName = p.lastName;
+    this->address = p.address;
+    return *this;
+}
+
+Person::~Person()= default;

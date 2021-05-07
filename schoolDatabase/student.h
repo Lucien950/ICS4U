@@ -20,8 +20,11 @@ public:
     void setGrade(int n);
     void setStudentId(string id);
     void addLate();
-    string toString();
-
+    string toString() override;
     static bool isValidId(string id);
+
+    Student(Student &s);
+    Student& operator=(Student &p);
+    ~Student();
 };
 #endif //CODE_STUDENT_H

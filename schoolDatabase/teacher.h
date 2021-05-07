@@ -19,7 +19,11 @@ public:
     void setEmployeeId(string id);
     static bool isValidId(string id);
     static void markStudentLate(Student *s);
-    string toString();
+    string toString() override;
+
+    Teacher(Teacher & t);
+    Teacher& operator=(Teacher &p);
+    ~Teacher();
 };
 
 #endif //CODE_TEACHER_H
