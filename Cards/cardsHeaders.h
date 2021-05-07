@@ -1,8 +1,7 @@
 #ifndef CODE_CARDSHEADERS_H
 #define CODE_CARDSHEADERS_H
+
 #include <string>
-
-
 using namespace std;
 class Card{
 public:
@@ -17,19 +16,6 @@ public:
 
     static string faces[13];
     static string suits[4];
-};
-
-class DeckOfCards{
-public:
-    Card *deck;
-    int currentCard;
-    const int SIZE_OF_DECK;
-
-    explicit DeckOfCards(Card[], int deckSize);
-    void shuffle();
-
-    Card dealCard();
-    bool moreCards();
 };
 
 #endif //CODE_CARDSHEADERS_H
