@@ -1,0 +1,790 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0077)http://teachers.colonelby.com/cbcoding/cbcoding2020/Hudson/ics4ufinaltest.htm -->
+<html data-inboxsdk-session-id="1621266218623-0.29432417958289925"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252"><style>body {transition: opacity ease-in 0.2s; } 
+body[unresolved] {opacity: 0; display: block; overflow: hidden; position: relative; } 
+</style>
+	<meta name="generator" content="ExamView HTML Generator 1.0.5">
+	<meta name="robots" content="noindex,nofollow">
+	<title>ICS 4U Final Test</title>
+	<style type="text/css">
+		.spacer { line-height:.7em; }
+		.title { font-size:13pt; font-weight:bold; font-family:"Times New Roman", "Times", serif; color:#000000; }
+		.qnumber { font-size:12pt; font-family:"Times New Roman", "Times", serif; color:#000000; text-align:right; }
+		.choice { font-size:12pt; font-family:"Times New Roman", "Times", serif; color:#000000; }
+		.default { font-size:12pt; font-family:"Times New Roman", "Times", serif; color:#000000; }
+		.qinfo { font-size:12pt; font-family:"Times New Roman", "Times", serif; color:#000000; }
+		.points { font-size:8pt; font-family:"Times New Roman", "Times", serif; color:#000000; }
+		TD.pad { padding: 0pt 4pt 0pt 4pt; }
+		.font1 { font-family:"Times New Roman", "Times", serif; }
+		.font2 { font-family:"Times New Roman", "Times", serif; }
+	</style>
+<script type="text/javascript" language="JavaScript1.1">
+	// Copyright (c) 2000-2008 eInstruction Corp.
+	var listMap = '11111111111111111111';
+	var qtypeMap = '22222222222222222222';
+	var ansMap = new Array(20);
+	var ptsMap = new Array(20);
+	ansMap[0] = '40';
+	ptsMap[0] = 1;
+	ansMap[1] = '46';
+	ptsMap[1] = 1;
+	ansMap[2] = '40';
+	ptsMap[2] = 1;
+	ansMap[3] = '46';
+	ptsMap[3] = 1;
+	ansMap[4] = '41';
+	ptsMap[4] = 1;
+	ansMap[5] = '47';
+	ptsMap[5] = 1;
+	ansMap[6] = '46';
+	ptsMap[6] = 1;
+	ansMap[7] = '49';
+	ptsMap[7] = 1;
+	ansMap[8] = '4b';
+	ptsMap[8] = 1;
+	ansMap[9] = '49';
+	ptsMap[9] = 1;
+	ansMap[10] = '49';
+	ptsMap[10] = 1;
+	ansMap[11] = '48';
+	ptsMap[11] = 1;
+	ansMap[12] = '4c';
+	ptsMap[12] = 1;
+	ansMap[13] = '4a';
+	ptsMap[13] = 1;
+	ansMap[14] = '4c';
+	ptsMap[14] = 1;
+	ansMap[15] = '52';
+	ptsMap[15] = 1;
+	ansMap[16] = '50';
+	ptsMap[16] = 1;
+	ansMap[17] = '50';
+	ptsMap[17] = 1;
+	ansMap[18] = '52';
+	ptsMap[18] = 1;
+	ansMap[19] = '51';
+	ptsMap[19] = 1;
+	function HandleSubmit(f)
+	{
+		var	MAGIC = 840;
+		var	totalCorrect = 0;
+		var	totalPossible = 0;
+		var	numCorrect = 0;
+		var	numPossible = 0;
+		var	numBlank = 0;
+		var	index;
+		var	msg;
+		var	i;
+
+		f.student_name.value = StripSpaces(f.student_name.value);
+		f.student_id.value = StripSpaces(f.student_id.value);
+		f.student_email.value = StripSpaces(f.student_email.value);
+
+		index = 0;
+		//PROCESS ALL THE ANSWERS
+		for (i=0; i < f.length; ++i) {
+			const element = f.elements[i]
+			//basically test if this is a selection box
+			if (element.name.indexOf(":") > 0) {
+
+				//i think multiple choice test
+				if (listMap.charAt(index) == "1") {
+					listIndex = element.selectedIndex;
+					text = StripSpaces(element.options[listIndex].value);
+				} else {
+					element.value = StripSpaces(element.value);
+					text = element.value;
+				}
+
+				if (text.length == 0)
+					++numBlank;
+				++index;
+			}
+		}
+
+		if (f.student_name.value == "") {
+			alert("Student name cannot be blank.");
+			return(false);
+		}
+
+		if (numBlank > 0) {
+			if (numBlank == 1)
+				msg = "1 question";
+			else
+				msg = numBlank + " questions";
+			if (!confirm("You have not answered " + msg +
+				"  Are you sure you want to end the test?"))
+				return(false);
+		}
+
+		index = 0;
+		var scoreDetails = new Array();
+		for (i=0; i < f.length; ++i) {
+			if (f.elements[i].name.indexOf(":") > 0) {
+				if (listMap.charAt(index) == "1") {
+					listIndex = f.elements[i].selectedIndex;
+					text = f.elements[i].options[listIndex].value;
+				} else
+					text = f.elements[i].value;
+
+				numPossible = ptsMap[index] * MAGIC;
+				if (ansMap[index] == "")
+					scoreDetails[index] = "?--";
+				else {
+					var scoreResult = ScoreAnswer(index, text, numPossible);
+					numCorrect = scoreResult.numPoints;
+					scoreDetails[index] = (scoreResult.isCorrect) ? " " : "X";
+					scoreDetails[index] += (Math.round(numCorrect * 100 / MAGIC) / 100).toString();
+					totalCorrect += numCorrect;
+					totalPossible += numPossible;
+				}
+
+				scoreDetails[index] += "/" + (numPossible / MAGIC);
+				++index;
+			}
+		}
+
+		f.score_details.value = scoreDetails.join("|");
+		f.score_correct.value = Math.round(totalCorrect * 100 / MAGIC) / 100;
+		f.score_possible.value = Math.round(totalPossible * 100 / MAGIC) / 100;
+		if (totalPossible > 0)
+			f.score_percent.value = Math.round(100.0 * totalCorrect / totalPossible);
+		else
+			f.score_percent.value = 0;
+
+		return(true);
+	}
+
+	function TranslateAnswer(s, answerIndex)
+	{
+		var	value;
+		var	newString;
+		var	code;
+		var	i;
+
+		value = (answerIndex % 31) + 1;
+		newString = "";
+		for (i=0; i < s.length; i += 2) {
+			code = parseInt(s.substring(i, i + 2), 16);
+			newString += String.fromCharCode(code ^ value);
+		}
+
+		return(newString);
+	}
+
+	function ScoreAnswer(answerIndex, responseText, pointsPossible)
+	{
+		var answerText = TranslateAnswer(ansMap[answerIndex], answerIndex);
+		var qtype = qtypeMap.charAt(answerIndex);
+		var nrExactMatch = false;
+		var result = new Array();
+
+		result.numPoints = 0;
+		result.isCorrect = false;
+
+		if (qtype == "3" && answerText.substring(0, 2) == "p:") {
+			answerText = answerText.substr(2);
+			if (responseText.toUpperCase() == answerText.toUpperCase())
+				result.isCorrect = true;
+			else
+				result.numPoints = MultiResponseCompare(responseText, answerText, pointsPossible);
+		} else if (qtype == "6") {
+			if (answerText.substring(0, 2) == "==") {
+				answerText = answerText.substr(2);
+				nrExactMatch = true;
+			}
+			if (NumericCompare(responseText, answerText, nrExactMatch))
+				result.isCorrect = true;
+		} else if (qtype == "7") {
+			if (CompletionCompare(responseText, answerText))
+				result.isCorrect = true;
+		} else if (responseText.toUpperCase() == answerText.toUpperCase())
+			result.isCorrect = true;
+
+		if (result.isCorrect)
+			result.numPoints = pointsPossible;
+
+		return(result);
+	}
+
+	function StripSpaces(s)
+	{
+		var	len;
+		var	i;
+
+		len = s.length;
+		for (i=len - 1; i >= 0 && s.charAt(i) == " "; --i)
+			len = i;
+
+		if (len == 0)
+			s = "";
+		else if (len != s.length)
+			s = s.substring(0, len);
+
+		return(s);
+	}
+
+	function MultiResponseCompare(responseText, answerText, pointsPossible)
+	{
+	}
+
+	function NumericCompare(response, answer, exactMatch)
+	{
+	}
+
+
+	function CompletionCompare(responseText, answerText)
+	{
+		return(false);
+	}
+
+	function AllowReset()
+	{
+		return(window.confirm("Do you want to clear all of your answers?"));
+	}
+
+	function Restart()
+	{
+		if (AllowReset()) {
+			document.TestForm.onreset = function() { };
+			document.TestForm.reset();
+			document.TestForm.onreset = function() { AllowReset(); };
+		}
+	}
+// -->
+</script>
+</head>
+<body onresize="if(document.layers &amp;&amp; navigator.appVersion.indexOf(&quot;Win&quot;) &lt; 0){history.go(0);}" bgcolor="#FFFFFF" style="background-image: url(&quot;ics4ufinaltest_files/header.gif&quot;); background-repeat: no-repeat;" data-new-gr-c-s-check-loaded="14.1011.0" data-gr-ext-installed="" class="vsc-initialized">
+<noscript>
+	<h3><font color='#FF0000'>Javascript not enabled</font></h3>
+</noscript>
+<script type="text/javascript" language="JavaScript">
+<!--
+if (navigator.appName.indexOf("Netscape") >= 0) {
+	if (parseInt(navigator.appVersion.charAt(0)) < 4)
+		alert("This document requires Netscape Navigator version 4.0 or later.");
+} else if (navigator.appName.indexOf("Explorer") >= 0) {
+	if (parseInt(navigator.appVersion.charAt(0)) < 4)
+		alert("This document requires Internet Explorer version 4.0 or later.");
+}
+// -->
+</script>
+<form name="TestForm" action="http://score.examview.com/cgi-bin/results.cgi" method="POST" onsubmit="return(HandleSubmit(this))" onreset="return(AllowReset())" _lpchecked="1">
+<input type="hidden" name="product_version" value="6.2.1">
+<input type="hidden" name="instructor_name" value="f">
+<input type="hidden" name="instructor_formalname" value="Mr. Hudson">
+<input type="hidden" name="instructor_email" value="benjamin.hudson@ocdsb.ca">
+<input type="hidden" name="instructor_org" value="f">
+<input type="hidden" name="instructor_city" value="f">
+<input type="hidden" name="instructor_state" value="F">
+<input type="hidden" name="test_name" value="ICS 4U Final Test">
+<input type="hidden" name="other_label" value="Other">
+<input type="hidden" name="test_mixed_questions" value="0">
+<input type="hidden" name="score_correct" value="0">
+<input type="hidden" name="score_possible" value="0">
+<input type="hidden" name="score_percent" value="0">
+<input type="hidden" name="score_subjective" value="0">
+<input type="hidden" name="score_details" value="">
+<div class="spacer">&nbsp;</div>
+<div class="default">
+	<div style="margin-left:1em">
+	<b>Name:</b>&nbsp;<input type="text" name="student_name" size="30" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABHklEQVQ4EaVTO26DQBD1ohQWaS2lg9JybZ+AK7hNwx2oIoVf4UPQ0Lj1FdKktevIpel8AKNUkDcWMxpgSaIEaTVv3sx7uztiTdu2s/98DywOw3Dued4Who/M2aIx5lZV1aEsy0+qiwHELyi+Ytl0PQ69SxAxkWIA4RMRTdNsKE59juMcuZd6xIAFeZ6fGCdJ8kY4y7KAuTRNGd7jyEBXsdOPE3a0QGPsniOnnYMO67LgSQN9T41F2QGrQRRFCwyzoIF2qyBuKKbcOgPXdVeY9rMWgNsjf9ccYesJhk3f5dYT1HX9gR0LLQR30TnjkUEcx2uIuS4RnI+aj6sJR0AM8AaumPaM/rRehyWhXqbFAA9kh3/8/NvHxAYGAsZ/il8IalkCLBfNVAAAAABJRU5ErkJggg==&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; cursor: auto;"> &nbsp;&nbsp;
+	<b>ID:</b>&nbsp;<input type="text" name="student_id" size="12"><br>
+	<div class="spacer">&nbsp;</div>
+	<b>Email:</b>&nbsp;<input type="text" name="student_email" size="45"><br><br>
+	</div>
+</div>
+<div class="title">ICS 4U Final Test</div>
+
+<table align="left" width="100%" border="0" cellpadding="0" cellspacing="0">
+<tbody><tr valign="top">
+	<td colspan="3"><br>
+<div class="default"><b>Multiple Choice</b><span style="font-size:10pt"><br></span><i>Identify the
+choice that best completes the statement or answers the question.</i></div>
+<div class="spacer">&nbsp;</div>
+	</td>
+</tr>
+<tr valign="baseline">
+	<td>
+		<select name="MC:1" align="top" onmousewheel="return(false);">
+			<option value=" "> 
+			</option><option value="A">A
+			</option><option value="B">B
+			</option><option value="C">C
+			</option><option value="D">D
+		</option></select>
+	</td>
+	<td>
+		<p class="qnumber">&nbsp;1.&nbsp;</p>
+	</td>
+	<td width="100%">
+<div class="default">Which statement correctly declares and initializes a dynamic 3*5 2D
+array?</div>
+<div class="default"><table cellpadding="0" cellspacing="0" width="95%" border="0"><tbody><tr valign="baseline"><td width="4%"><div class="choice">a.</div></td><td width="46%"><span class="default">int** arrPtr = new int*[3];<br>for(int i = 0; i &lt; 5; i++)
+{<br>arrPtr[i]=new int[5];<br>}</span></td><td width="4%"><div class="choice">c.</div></td><td width="46%"><span class="default">int** arrPtr = new
+int*[5];<br>for(int i = 0; i &lt; 3; i++) {<br>arrPtr[i]=new
+int[3];<br>}</span></td></tr><tr valign="baseline"><td><div class="choice">b.</div></td><td><span class="default">int** arrPtr = new
+int*[3][5];</span></td><td><div class="choice">d.</div></td><td><span class="default">int** arrPtr[3][5];</span></td></tr></tbody></table></div>
+<div class="spacer">&nbsp;</div>
+	</td>
+</tr>
+<tr valign="baseline">
+	<td>
+		<select name="MC:2" align="top" onmousewheel="return(false);">
+			<option value=" "> 
+			</option><option value="A">A
+			</option><option value="B">B
+			</option><option value="C">C
+			</option><option value="D">D
+		</option></select>
+	</td>
+	<td>
+		<p class="qnumber">&nbsp;2.&nbsp;</p>
+	</td>
+	<td width="100%">
+<div class="default">Which piece of code below correctly converts a 2D array into a 1D array in the
+right order (left to right first, then top to bottom after each row is done)?</div>
+<div class="default"><table cellpadding="0" cellspacing="0" width="95%" border="0"><tbody><tr valign="baseline"><td width="4%"><div class="choice">a.</div></td><td width="46%"><span class="default">for (int i = 0; i &lt; column; i++) {<br>for (int j = 0; j &lt; row; j++)
+{<br>array1D[i * row + j] = array2D[i][j];<br>}<br>}</span></td><td width="4%"><div class="choice">c.</div></td><td width="46%"><span class="default">array1D[i *
+row + j] = array2D[i][j];</span></td></tr><tr valign="baseline"><td><div class="choice">b.</div></td><td><span class="default">for (int i = row-1; i &gt; 0; i--) {<br>for
+(int j = column-1; j &gt; 0; j--) {<br>array1D[i * (row-1) + j] =
+array2D[i][j];<br>}<br>}</span></td><td><div class="choice">d.</div></td><td><span class="default">for (int i = 0; i &lt; row; i++) {<br>for (int
+j = 0; j &lt; column; j++) {<br>array1D[i * column + j] =
+array2D[i][j];<br>}<br>}</span></td></tr></tbody></table></div>
+<div class="spacer">&nbsp;</div>
+	</td>
+</tr>
+<tr valign="baseline">
+	<td>
+		<select name="MC:3" align="top" onmousewheel="return(false);">
+			<option value=" "> 
+			</option><option value="A">A
+			</option><option value="B">B
+			</option><option value="C">C
+			</option><option value="D">D
+		</option></select>
+	</td>
+	<td>
+		<p class="qnumber">&nbsp;3.&nbsp;</p>
+	</td>
+	<td width="100%">
+<div class="default">What does the base case do in the code below?<br><br>void q1a(int *array, int n)
+{<br>if (n==0) {<br>array[n]=3;<br>} else {<br>q1a(array,
+n-1);<br>array[n]=array[n-1] -2;<br>}<br>}</div>
+<div class="default"><table cellpadding="0" cellspacing="0" width="95%" border="0"><tbody><tr valign="baseline"><td width="4%"><div class="choice">a.</div></td><td width="46%"><span class="default">Set initial element in array to n-1</span></td><td width="4%"><div class="choice">c.</div></td><td width="46%"><span class="default">Set initial element in array to
+3</span></td></tr><tr valign="baseline"><td><div class="choice">b.</div></td><td><span class="default">Set initial element in array to n</span></td><td><div class="choice">d.</div></td><td><span class="default">Run the function q1a(array,
+n-1);</span></td></tr></tbody></table></div>
+<div class="spacer">&nbsp;</div>
+	</td>
+</tr>
+<tr valign="baseline">
+	<td>
+		<select name="MC:4" align="top" onmousewheel="return(false);">
+			<option value=" "> 
+			</option><option value="A">A
+			</option><option value="B">B
+			</option><option value="C">C
+			</option><option value="D">D
+		</option></select>
+	</td>
+	<td>
+		<p class="qnumber">&nbsp;4.&nbsp;</p>
+	</td>
+	<td width="100%">
+<div class="default">Which of the following properly allocates memory on the heap for a
+string?</div>
+<div class="default"><table cellpadding="0" cellspacing="0" width="95%" border="0"><tbody><tr valign="baseline"><td width="4%"><div class="choice">a.</div></td><td width="46%"><span class="default">string pstr = new string;</span></td><td width="4%"><div class="choice">c.</div></td><td width="46%"><span class="default">string *pstr;</span></td></tr><tr valign="baseline"><td><div class="choice">b.</div></td><td><span class="default">string *pstr = new
+string;</span></td><td><div class="choice">d.</div></td><td><span class="default">string
+pstr;</span></td></tr></tbody></table></div>
+<div class="spacer">&nbsp;</div>
+	</td>
+</tr>
+<tr valign="baseline">
+	<td>
+		<select name="MC:5" align="top" onmousewheel="return(false);">
+			<option value=" "> 
+			</option><option value="A">A
+			</option><option value="B">B
+			</option><option value="C">C
+			</option><option value="D">D
+		</option></select>
+	</td>
+	<td>
+		<p class="qnumber">&nbsp;5.&nbsp;</p>
+	</td>
+	<td width="100%">
+<div class="default">Given the following function:<br><br>int power(int base, int exponent) {<br>if
+(exponent == 0) {<br>return 1;<br>} else {<br>return (base * power(base, exponent -
+1));<br>}<br>}<br>How many times will power() be called if power(3, 5) is run?</div>
+<div class="default"><table cellpadding="0" cellspacing="0" width="95%" border="0"><tbody><tr valign="baseline"><td width="4%"><div class="choice">a.</div></td><td width="46%"><span class="default">3</span></td><td width="4%"><div class="choice">c.</div></td><td width="46%"><span class="default">5</span></td></tr><tr valign="baseline"><td><div class="choice">b.</div></td><td><span class="default">4</span></td><td><div class="choice">d.</div></td><td><span class="default">6</span></td></tr></tbody></table></div>
+<div class="spacer">&nbsp;</div>
+	</td>
+</tr>
+<tr valign="baseline">
+	<td>
+		<select name="MC:6" align="top" onmousewheel="return(false);">
+			<option value=" "> 
+			</option><option value="A">A
+			</option><option value="B">B
+			</option><option value="C">C
+			</option><option value="D">D
+		</option></select>
+	</td>
+	<td>
+		<p class="qnumber">&nbsp;6.&nbsp;</p>
+	</td>
+	<td width="100%">
+<div class="default">What is the main disadvantage of a binary search when compared to a linear
+search?</div>
+<div class="default"><table cellpadding="0" cellspacing="0" width="95%" border="0"><tbody><tr valign="baseline"><td width="4%"><div class="choice">a.</div></td><td width="46%"><span class="default">It requires a pre-sorted array.</span></td><td width="4%"><div class="choice">c.</div></td><td width="46%"><span class="default">It takes more
+memory.</span></td></tr><tr valign="baseline"><td><div class="choice">b.</div></td><td><span class="default">It is slower.</span></td><td><div class="choice">d.</div></td><td><span class="default">It fails if there is more than one element with the sought-after
+value.</span></td></tr></tbody></table></div>
+<div class="spacer">&nbsp;</div>
+	</td>
+</tr>
+<tr valign="baseline">
+	<td>
+		<select name="MC:7" align="top" onmousewheel="return(false);">
+			<option value=" "> 
+			</option><option value="A">A
+			</option><option value="B">B
+			</option><option value="C">C
+			</option><option value="D">D
+		</option></select>
+	</td>
+	<td>
+		<p class="qnumber">&nbsp;7.&nbsp;</p>
+	</td>
+	<td width="100%">
+<div class="default">What is the pivot in quicksort?</div>
+<div class="default"><table cellpadding="0" cellspacing="0" width="95%" border="0"><tbody><tr valign="baseline"><td width="4%"><div class="choice">a.</div></td><td width="46%"><span class="default">The first value to be placed in the correct position.</span></td><td width="4%"><div class="choice">c.</div></td><td width="46%"><span class="default">A pivotal value that all values
+must be smaller than.</span></td></tr><tr valign="baseline"><td><div class="choice">b.</div></td><td><span class="default">The middle value.</span></td><td><div class="choice">d.</div></td><td><span class="default">A value that has not been put into its correct
+position.</span></td></tr></tbody></table></div>
+<div class="spacer">&nbsp;</div>
+	</td>
+</tr>
+<tr valign="baseline">
+	<td>
+		<select name="MC:8" align="top" onmousewheel="return(false);">
+			<option value=" "> 
+			</option><option value="A">A
+			</option><option value="B">B
+			</option><option value="C">C
+			</option><option value="D">D
+		</option></select>
+	</td>
+	<td>
+		<p class="qnumber">&nbsp;8.&nbsp;</p>
+	</td>
+	<td width="100%">
+<div class="default">Which of the following is not a valid way of initializing a pointer?</div>
+<div class="default"><table cellpadding="0" cellspacing="0" width="95%" border="0"><tbody><tr valign="baseline"><td width="4%"><div class="choice">a.</div></td><td width="46%"><span class="default">int ptr = &amp;myValue;</span></td><td width="4%"><div class="choice">c.</div></td><td width="46%"><span class="default">int *pt r=
+&amp;myValue;</span></td></tr><tr valign="baseline"><td><div class="choice">b.</div></td><td><span class="default">int *ptr = NULL;</span></td><td><div class="choice">d.</div></td><td><span class="default">int *ptr;</span></td></tr></tbody></table></div>
+<div class="spacer">&nbsp;</div>
+	</td>
+</tr>
+<tr valign="baseline">
+	<td>
+		<select name="MC:9" align="top" onmousewheel="return(false);">
+			<option value=" "> 
+			</option><option value="A">A
+			</option><option value="B">B
+			</option><option value="C">C
+			</option><option value="D">D
+		</option></select>
+	</td>
+	<td>
+		<p class="qnumber">&nbsp;9.&nbsp;</p>
+	</td>
+	<td width="100%">
+<div class="default">Which operator returns the address of the operand:</div>
+<div class="default"><table cellpadding="0" cellspacing="0" width="95%" border="0"><tbody><tr valign="baseline"><td width="4%"><div class="choice">a.</div></td><td width="46%"><span class="default">*</span></td><td width="4%"><div class="choice">c.</div></td><td width="46%"><span class="default">return</span></td></tr><tr valign="baseline"><td><div class="choice">b.</div></td><td><span class="default">&amp;</span></td><td><div class="choice">d.</div></td><td><span class="default">&lt;&lt;</span></td></tr></tbody></table></div>
+<div class="spacer">&nbsp;</div>
+	</td>
+</tr>
+<tr valign="baseline">
+	<td>
+		<select name="MC:10" align="top" onmousewheel="return(false);">
+			<option value=" "> 
+			</option><option value="A">A
+			</option><option value="B">B
+			</option><option value="C">C
+			</option><option value="D">D
+		</option></select>
+	</td>
+	<td>
+		<p class="qnumber">&nbsp;10.&nbsp;</p>
+	</td>
+	<td width="100%">
+<div class="default"><span style="font-size:12pt">The boolean expression
+!((A&lt;B)&amp;&amp;(C&gt;D))&nbsp; is equivalent to which of the following
+expressions:</span></div>
+<div class="default"><table cellpadding="0" cellspacing="0" width="95%" border="0"><tbody><tr valign="baseline"><td width="4%"><div class="choice">a.</div></td><td width="46%"><span class="default"><span style="font-size:12pt">(A &lt; B) || (C &lt; D)</span></span></td><td width="4%"><div class="choice">c.</div></td><td width="46%"><span class="default"><span style="font-size:12pt">(A &gt;= B) &amp;&amp; (C &lt;= D)</span></span></td></tr><tr valign="baseline"><td><div class="choice">b.</div></td><td><span class="default"><span style="font-size:12pt">(A &gt; B) &amp;&amp; (C &lt; D)</span></span></td><td><div class="choice">d.</div></td><td><span class="default"><span style="font-size:12pt">(A &gt;= B)
+||&nbsp; (C &lt;= D)</span></span></td></tr></tbody></table></div>
+<div class="spacer">&nbsp;</div>
+	</td>
+</tr>
+<tr valign="baseline">
+	<td>
+		<select name="MC:11" align="top" onmousewheel="return(false);">
+			<option value=" "> 
+			</option><option value="A">A
+			</option><option value="B">B
+			</option><option value="C">C
+			</option><option value="D">D
+		</option></select>
+	</td>
+	<td>
+		<p class="qnumber">&nbsp;11.&nbsp;</p>
+	</td>
+	<td width="100%">
+<div class="default"><span style="font-size:12pt">The boolean expression <b><img width="91" height="22" align="middle" alt="mc011-1.jpg" src="./ICS 4U Final Test_files/mc011-1.jpg" border="0"></b></span> is true whenever:</div>
+<div class="default"><table cellpadding="0" cellspacing="0" width="95%" border="0"><tbody><tr valign="baseline"><td width="4%"><div class="choice">a.</div></td><td width="46%"><span class="default"><span style="font-size:12pt">whenever A is true.</span></span></td><td width="4%"><div class="choice">c.</div></td><td width="46%"><span class="default"><span style="font-size:12pt">whenever either A is true or B is true.</span></span></td></tr><tr valign="baseline"><td><div class="choice">b.</div></td><td><span class="default"><span style="font-size:12pt">whenever B is true.</span></span></td><td><div class="choice">d.</div></td><td><span class="default"><span style="font-size:12pt">only when both A
+and B are true. </span></span></td></tr></tbody></table></div>
+<div class="spacer">&nbsp;</div>
+	</td>
+</tr>
+<tr valign="baseline">
+	<td>
+		<select name="MC:12" align="top" onmousewheel="return(false);">
+			<option value=" "> 
+			</option><option value="A">A
+			</option><option value="B">B
+			</option><option value="C">C
+			</option><option value="D">D
+		</option></select>
+	</td>
+	<td>
+		<p class="qnumber">&nbsp;12.&nbsp;</p>
+	</td>
+	<td width="100%">
+<div class="default"><div style="text-align:justify;margin-left:36pt"><span style="font-size:12pt">What is the return type of a constructor?<b> </b></span></div></div>
+<div class="default"><table cellpadding="0" cellspacing="0" width="95%" border="0"><tbody><tr valign="baseline"><td width="4%"><div class="choice">a.</div></td><td width="46%"><span class="default">void</span></td><td width="4%"><div class="choice">c.</div></td><td width="46%"><span class="default">bool</span></td></tr><tr valign="baseline"><td><div class="choice">b.</div></td><td><span class="default">int</span></td><td><div class="choice">d.</div></td><td><span class="default">constructors don�t have a return
+type</span></td></tr></tbody></table></div>
+<div class="spacer">&nbsp;</div>
+	</td>
+</tr>
+<tr valign="baseline">
+	<td>
+		<select name="MC:13" align="top" onmousewheel="return(false);">
+			<option value=" "> 
+			</option><option value="A">A
+			</option><option value="B">B
+			</option><option value="C">C
+			</option><option value="D">D
+		</option></select>
+	</td>
+	<td>
+		<p class="qnumber">&nbsp;13.&nbsp;</p>
+	</td>
+	<td width="100%">
+<div class="default"><div style="text-align:justify;margin-left:36pt"><span style="font-size:12pt">What is the <u>last</u> number output from this program
+segment?<br></span></div><span style="font-size:12pt"><b><br>int</b> <i>J</i>,<i>K</i>;<br><b>for</b>
+(<i>J</i>=1; <i>J</i>&lt;30; <i>J</i>*=3)<br>{<br>&nbsp;&nbsp; <i>K</i> = 2 *
+<i>J;</i><br>&nbsp;&nbsp; <b>cout</b> &lt;&lt; <i>J </i>&lt;&lt;<i>
+</i><b>endl</b>;<br>}<br></span></div>
+<div class="default"><table cellpadding="0" cellspacing="0" width="95%" border="0"><tbody><tr valign="baseline"><td width="4%"><div class="choice">a.</div></td><td width="46%"><span class="default">27</span></td><td width="4%"><div class="choice">c.</div></td><td width="46%"><span class="default">30</span></td></tr><tr valign="baseline"><td><div class="choice">b.</div></td><td><span class="default">29</span></td><td><div class="choice">d.</div></td><td><span class="default">54</span></td></tr></tbody></table></div>
+<div class="spacer">&nbsp;</div>
+	</td>
+</tr>
+<tr valign="baseline">
+	<td>
+		<select name="MC:14" align="top" onmousewheel="return(false);">
+			<option value=" "> 
+			</option><option value="A">A
+			</option><option value="B">B
+			</option><option value="C">C
+			</option><option value="D">D
+		</option></select>
+	</td>
+	<td>
+		<p class="qnumber">&nbsp;14.&nbsp;</p>
+	</td>
+	<td width="100%">
+<div class="default"><span style="font-size:12pt">When a function is
+�overloaded�,</span></div>
+<div class="default"><table cellpadding="0" cellspacing="0" width="95%" border="0"><tbody><tr valign="baseline"><td width="4%"><div class="choice">a.</div></td><td width="46%"><span class="default"><span style="font-size:12pt">it can handle integers greater than
+32767.</span></span></td><td width="4%"><div class="choice">c.</div></td><td width="46%"><span class="default">it creates an infinite loop.</span></td></tr><tr valign="baseline"><td><div class="choice">b.</div></td><td><span class="default"><span style="font-size:12pt">it can handle more
+than 256 characters.</span></span></td><td><div class="choice">d.</div></td><td><span class="default"><span style="font-size:12pt">it has more than one function implementation, but
+different sets of parameters.</span></span></td></tr></tbody></table></div>
+<div class="spacer">&nbsp;</div>
+	</td>
+</tr>
+<tr valign="baseline">
+	<td>
+		<select name="MC:15" align="top" onmousewheel="return(false);">
+			<option value=" "> 
+			</option><option value="A">A
+			</option><option value="B">B
+			</option><option value="C">C
+			</option><option value="D">D
+		</option></select>
+	</td>
+	<td>
+		<p class="qnumber">&nbsp;15.&nbsp;</p>
+	</td>
+	<td width="100%">
+<div class="default"><span style="font-size:12pt">A �class� is a</span></div>
+<div class="default"><table cellpadding="0" cellspacing="0" width="95%" border="0"><tbody><tr valign="baseline"><td width="4%"><div class="choice">a.</div></td><td width="46%"><span class="default"><span style="font-size:12pt">special public class member function that is executed at
+the instantiation of an object.</span></span></td><td width="4%"><div class="choice">c.</div></td><td width="46%"><span class="default"><span style="font-size:12pt">data type.</span></span></td></tr><tr valign="baseline"><td><div class="choice">b.</div></td><td><span class="default"><span style="font-size:12pt">special public class member function that is executed when the object is no
+longer in scope.</span></span></td><td><div class="choice">d.</div></td><td><span class="default"><span style="font-size:12pt">variable.</span></span></td></tr></tbody></table></div>
+<div class="spacer">&nbsp;</div>
+	</td>
+</tr>
+<tr valign="baseline">
+	<td>
+		<select name="MC:16" align="top" onmousewheel="return(false);">
+			<option value=" "> 
+			</option><option value="A">A
+			</option><option value="B">B
+			</option><option value="C">C
+			</option><option value="D">D
+		</option></select>
+	</td>
+	<td>
+		<p class="qnumber">&nbsp;16.&nbsp;</p>
+	</td>
+	<td width="100%">
+<div class="default"><span style="font-size:12pt">A �destructor� is a</span></div>
+<div class="default"><table cellpadding="0" cellspacing="0" width="95%" border="0"><tbody><tr valign="baseline"><td width="4%"><div class="choice">a.</div></td><td width="46%"><span class="default"><span style="font-size:12pt">special public class member function that is executed at
+the instantiation of an object.</span></span></td><td width="4%"><div class="choice">c.</div></td><td width="46%"><span class="default"><span style="font-size:12pt">data type.</span></span></td></tr><tr valign="baseline"><td><div class="choice">b.</div></td><td><span class="default"><span style="font-size:12pt">special public class member function that is executed when the object is no
+longer in scope.</span></span></td><td><div class="choice">d.</div></td><td><span class="default">variable.</span></td></tr></tbody></table></div>
+<div class="spacer">&nbsp;</div>
+	</td>
+</tr>
+<tr valign="baseline">
+	<td>
+		<select name="MC:17" align="top" onmousewheel="return(false);">
+			<option value=" "> 
+			</option><option value="A">A
+			</option><option value="B">B
+			</option><option value="C">C
+			</option><option value="D">D
+		</option></select>
+	</td>
+	<td>
+		<p class="qnumber">&nbsp;17.&nbsp;</p>
+	</td>
+	<td width="100%">
+<div class="default"><span style="font-size:12pt">The member function definitions are normally stored
+in the _____ file.</span></div>
+<div class="default"><table cellpadding="0" cellspacing="0" width="95%" border="0"><tbody><tr valign="baseline"><td width="4%"><div class="choice">a.</div></td><td width="46%"><span class="default">.cpp</span></td><td width="4%"><div class="choice">c.</div></td><td width="46%"><span class="default">.obj</span></td></tr><tr valign="baseline"><td><div class="choice">b.</div></td><td><span class="default">.h</span></td><td><div class="choice">d.</div></td><td><span class="default">.txt</span></td></tr></tbody></table></div>
+<div class="spacer">&nbsp;</div>
+	</td>
+</tr>
+<tr valign="top">
+	<td></td>
+	<td></td>
+	<td>
+<div class="spacer">&nbsp;</div>
+<div class="default">Refer to this program for the following three questions:<br><br><span style="font-size:10pt"><b>#include &lt;iostream.h&gt;<br></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br><b>int</b> <i>A </i>= 1;<br><br><b>void</b> <i>F</i>();<br><b>void</b> <i>G</i>();<br><br><b>void
+main</b>()<br>{<br><b>&nbsp;&nbsp; int</b> <i>B</i> = 2;<br>&nbsp;&nbsp; <i>A</i>++;<br>&nbsp;&nbsp;
+<b>cout </b>&lt;&lt; <i>A</i> &lt;&lt; <i>B</i> &lt;&lt; <b>endl;<br>&nbsp;&nbsp;
+F</b>();<b><br>&nbsp;&nbsp; G</b>();<b><br></b>}<br><br><b>void</b> F()<br>{<br>&nbsp;&nbsp;
+<b>int</b> <i>C</i> = 3;<br>&nbsp;&nbsp; <i>A</i>++;<br>&nbsp;&nbsp; <b>cout </b>&lt;&lt; <i>A</i>
+&lt;&lt; <i>C</i> &lt;&lt; <b>endl;</b><br>}<br><br><b>void</b> G()<br>{<br>&nbsp;&nbsp; <b>int</b>
+<i>D</i> = 4;<br>&nbsp;&nbsp; <i>A</i>++;<br><b>&nbsp;&nbsp; cout </b>&lt;&lt; <i>A</i> &lt;&lt;
+<i>D</i> &lt;&lt; <b>endl;<br>&nbsp;&nbsp; if</b> (<i>A</i> &gt; 5)<br>&nbsp;&nbsp;
+{<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int</b> <i>E</i> = 5;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<i>A</i>++;<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cout </b>&lt;&lt; <i>A</i> &lt;&lt; <i>5</i>
+&lt;&lt; <b>endl;<br></b>&nbsp;&nbsp; }<br>}</span></div>
+<div class="spacer">&nbsp;</div>
+	</td>
+</tr>
+<tr valign="baseline">
+	<td>
+		<select name="MC:18" align="top" onmousewheel="return(false);">
+			<option value=" "> 
+			</option><option value="A">A
+			</option><option value="B">B
+			</option><option value="C">C
+			</option><option value="D">D
+		</option></select>
+	</td>
+	<td>
+		<p class="qnumber">&nbsp;18.&nbsp;</p>
+	</td>
+	<td width="100%">
+<div class="default"><span style="font-size:12pt">What is the �scope� of the variable
+<i>D</i>?</span></div>
+<div class="default"><table cellpadding="0" cellspacing="0" width="95%" border="0"><tbody><tr valign="baseline"><td width="4%"><div class="choice">a.</div></td><td width="46%"><span class="default"><span style="font-size:12pt">function <i>F</i></span></span></td><td width="4%"><div class="choice">c.</div></td><td width="46%"><span class="default"><span style="font-size:12pt">the
+<b>if</b> structure in function <i>G</i></span></span></td></tr><tr valign="baseline"><td><div class="choice">b.</div></td><td><span class="default"><span style="font-size:12pt">function
+<i>G</i></span></span></td><td><div class="choice">d.</div></td><td><span class="default"><span style="font-size:12pt">the entire program</span></span></td></tr></tbody></table></div>
+<div class="spacer">&nbsp;</div>
+	</td>
+</tr>
+<tr valign="baseline">
+	<td>
+		<select name="MC:19" align="top" onmousewheel="return(false);">
+			<option value=" "> 
+			</option><option value="A">A
+			</option><option value="B">B
+			</option><option value="C">C
+			</option><option value="D">D
+			</option><option value="E">E
+		</option></select>
+	</td>
+	<td>
+		<p class="qnumber">&nbsp;19.&nbsp;</p>
+	</td>
+	<td width="100%">
+<div class="default"><span style="font-size:12pt">What are the �global�
+variables?</span></div>
+<div class="default"><table cellpadding="0" cellspacing="0" width="95%" border="0"><tbody><tr valign="baseline"><td width="4%"><div class="choice">a.</div></td><td width="46%"><span class="default"><i><span style="font-size:12pt">A</span></i></span></td><td width="4%"><div class="choice">d.</div></td><td width="46%"><span class="default"><span style="font-size:12pt"><i>B</i> and <i>C</i></span></span></td></tr><tr valign="baseline"><td><div class="choice">b.</div></td><td><span class="default"><i><span style="font-size:12pt">B</span></i></span></td><td><div class="choice">e.</div></td><td><span class="default"><span style="font-size:12pt"><i>B</i>,<i> C</i>, <i>D</i>, and
+<i>E</i></span></span></td></tr><tr valign="baseline"><td><div class="choice">c.</div></td><td><span class="default"><i><span style="font-size:12pt">C</span></i></span></td></tr></tbody></table></div>
+<div class="spacer">&nbsp;</div>
+	</td>
+</tr>
+<tr valign="baseline">
+	<td>
+		<select name="MC:20" align="top" onmousewheel="return(false);">
+			<option value=" "> 
+			</option><option value="A">A
+			</option><option value="B">B
+			</option><option value="C">C
+			</option><option value="D">D
+			</option><option value="E">E
+		</option></select>
+	</td>
+	<td>
+		<p class="qnumber">&nbsp;20.&nbsp;</p>
+	</td>
+	<td width="100%">
+<div class="default"><div style="text-align:justify;margin-left:36pt"><span style="font-size:12pt">When you run this program, which variable is never used?</span></div></div>
+<div class="default"><table cellpadding="0" cellspacing="0" width="95%" border="0"><tbody><tr valign="baseline"><td width="4%"><div class="choice">a.</div></td><td width="46%"><span class="default"><i>A</i></span></td><td width="4%"><div class="choice">d.</div></td><td width="46%"><span class="default"><i>D</i></span></td></tr><tr valign="baseline"><td><div class="choice">b.</div></td><td><span class="default"><i>B</i></span></td><td><div class="choice">e.</div></td><td><span class="default"><i>E</i></span></td></tr><tr valign="baseline"><td><div class="choice">c.</div></td><td><span class="default"><i>C</i></span></td></tr></tbody></table></div>
+<div class="spacer">&nbsp;</div>
+	</td>
+</tr>
+</tbody></table>
+<br clear="all">
+<br>
+<br>
+<table align="left" width="100%" cellpadding="0" cellspacing="0" border="0">
+<tbody><tr>
+    <td bgcolor="#000000">
+    <div style="font-size:1pt">&nbsp;</div>
+    </td>
+</tr>
+<tr>
+    <td><input type="image" src="./ICS 4U Final Test_files/submit.gif" alt="Grade and Submit">
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<a href="http://teachers.colonelby.com/cbcoding/cbcoding2020/Hudson/ics4ufinaltest.htm#" onclick="Restart(); return false"><img src="./ICS 4U Final Test_files/restart.gif" border="0" alt="Start Over"></a>
+    </td>
+</tr>
+</tbody></table>
+</form>
+
+<div class="surf-buddy-entity" data-v-app=""><div id="search-buddy-root" class="search-buddy-root"><div></div><div class="phl-dropdown-menu phl-alternatives-menu phl-smooth-scrollbars" data-v-a38ba7d0="" data-v-590dbd90="" style="display: none;"><div class="phl-close-dropdown-btn" data-v-a38ba7d0="">� </div><!--v-if--><!--<ScrollablePanel>--><div class="phl-scrollable-viewport" data-v-590dbd90="" data-v-a38ba7d0-s=""></div><!--</ScrollablePanel>--></div><div class="phl-dropdown-menu phl-blade-history-menu pv-small" data-v-a38ba7d0="" data-v-74d4f195="" style="z-index: 2147483647; max-width: 469px; top: 50px; right: 10px; display: none;"><!--v-if--><!--v-if--></div><div id="phl-restore-session-icon" data-v-11c48e19="" style="z-index: 2147483647; display: none;"><svg width="20" height="20" class="phl-svg-icon-restore" data-r="igpbk7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" data-v-11c48e19="">
+    <g xmlns="http://www.w3.org/2000/svg" clip-path="url(#clip0)">
+        <path d="M16 16L16 4L14 4L14 16L16 16Z" fill="white"></path>
+        <path d="M12 16L12 4L10 4L10 16L12 16Z" fill="white"></path>
+    </g>
+    <path xmlns="http://www.w3.org/2000/svg" d="M3.06704 10.139L6.73184 13.9391C6.82123 14.0318 7 14.0318 7 13.8464L7 6.15357C7 5.9682 6.82123 5.96819 6.73184 6.06088L3.06704 9.86097C2.97765 9.95366 2.97765 10.0463 3.06704 10.139Z" fill="white"></path>
+    <defs xmlns="http://www.w3.org/2000/svg">
+        <clippath id="clip0">
+            <rect fill="white" transform="translate(16 4) rotate(90)" style="width: 12px;height: 6px"></rect>
+        </clippath>
+    </defs>
+</svg></div><div id="phl-click-blocker" style="display: none;"></div></div></div></body></html>

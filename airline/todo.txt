@@ -1,0 +1,3 @@
+- Keep updating help function
+
+- Make it so that if an argument isn't provided, you can cin it afterwards.
